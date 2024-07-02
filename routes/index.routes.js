@@ -1,7 +1,6 @@
 const router = require("express").Router();
 
-router.get("/", (req, res, next) => {
-  res.json("All good in here");
-});
+router.use("/cohorts", require("./cohorts.routes.js"));
+router.use("/students", require("./students.routes.js"));
 
 module.exports = router;

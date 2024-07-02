@@ -5,16 +5,15 @@ _A progress everyday will go a very long way_
 ## Models
 
 ### Habit
-- id
 - title
 - descritpion
 - start goal
 - end goal
 - frequency
 - difficulty
+- status
 
 ### User
-- id
 - username
 - picture
 - email
@@ -23,7 +22,7 @@ _A progress everyday will go a very long way_
 - groupIds
 
 ### Group
-- id
+- name
 - habitId
 - userIds
 

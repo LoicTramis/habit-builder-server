@@ -1,0 +1,161 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "Habit builder Request",
+    "collectionId": "c596ad08-5547-49fa-ada5-78507c2c4ba5",
+    "dateExported": "2024-07-03T19:36:09.684Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "ca60d7b2-3762-468d-ad9f-ed083ef83531",
+            "name": "AUTH",
+            "containerId": "",
+            "created": "2024-07-03T07:58:11.109Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "8653df6e-e513-412b-a750-d6bb36fa7754",
+            "name": "-HABITS-",
+            "containerId": "",
+            "created": "2024-07-03T14:33:40.588Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "698a59e8-6377-420c-ab71-6f037bcfddf1",
+            "name": "-GROUPS-",
+            "containerId": "",
+            "created": "2024-07-03T14:33:50.847Z",
+            "sortNum": 30000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "145dadda-f912-49d2-a2fd-bb9ab4fbed9c",
+            "colId": "c596ad08-5547-49fa-ada5-78507c2c4ba5",
+            "containerId": "8653df6e-e513-412b-a750-d6bb36fa7754",
+            "name": "READ All habits",
+            "url": "",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-07-03T07:33:17.545Z",
+            "modified": "2024-07-03T07:33:17.545Z",
+            "headers": []
+        },
+        {
+            "_id": "7b227855-6159-4c97-b457-34f7f38c9618",
+            "colId": "c596ad08-5547-49fa-ada5-78507c2c4ba5",
+            "containerId": "ca60d7b2-3762-468d-ad9f-ed083ef83531",
+            "name": "SIGNUP (to create the token)",
+            "url": "{{local_url}}/auth/signup",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-07-03T07:58:00.096Z",
+            "modified": "2024-07-03T08:11:38.044Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"username\": \"John Doe\",\n  \"email\": \"john.doe@mail.com\",\n  \"password\": \"password\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "7d5d8cba-3bae-41a6-967c-0cd95f4a191b",
+            "colId": "c596ad08-5547-49fa-ada5-78507c2c4ba5",
+            "containerId": "8653df6e-e513-412b-a750-d6bb36fa7754",
+            "name": "READ all habit for one user",
+            "url": "{{local_url}}/api/habits/userId",
+            "method": "GET",
+            "sortNum": 15000,
+            "created": "2024-07-03T14:32:27.633Z",
+            "modified": "2024-07-03T14:33:11.625Z",
+            "headers": []
+        },
+        {
+            "_id": "54b744eb-aa8c-413c-b881-d1a12fda7c15",
+            "colId": "c596ad08-5547-49fa-ada5-78507c2c4ba5",
+            "containerId": "8653df6e-e513-412b-a750-d6bb36fa7754",
+            "name": "CREATE one habit",
+            "url": "{{local_url}}/api/habits",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-07-03T07:35:02.016Z",
+            "modified": "2024-07-03T14:22:54.507Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"Eat fruit\",\n  \"description\": \"Eat fruit daily in the afternoon or after lunch\",\n  \"frequency\": \"1/30\",\n  \"difficulty\": \"Easy\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ODUwN2JhNGFmZmI5ZDYxODQ4NTNhNCIsImlhdCI6MTcxOTk5NDQ4OSwiZXhwIjoxNzIwMDgwODg5fQ.WHI2aU86Ff97u1EekBJxoorSqlP3HliySLZUTebMKww"
+            }
+        },
+        {
+            "_id": "e2f217d3-fe16-4ac0-9546-05bc20ca869f",
+            "colId": "c596ad08-5547-49fa-ada5-78507c2c4ba5",
+            "containerId": "698a59e8-6377-420c-ab71-6f037bcfddf1",
+            "name": "READ one group",
+            "url": "{{local_url}}/api/groups/668582224110c9f1480baeec",
+            "method": "GET",
+            "sortNum": 25000,
+            "created": "2024-07-03T16:57:38.584Z",
+            "modified": "2024-07-03T17:13:36.807Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ODUwN2JhNGFmZmI5ZDYxODQ4NTNhNCIsImlhdCI6MTcxOTk5NDQ4OSwiZXhwIjoxNzIwMDgwODg5fQ.WHI2aU86Ff97u1EekBJxoorSqlP3HliySLZUTebMKww"
+            }
+        },
+        {
+            "_id": "6b31f32e-ab6c-4363-9ed8-7c7b79bd608c",
+            "colId": "c596ad08-5547-49fa-ada5-78507c2c4ba5",
+            "containerId": "698a59e8-6377-420c-ab71-6f037bcfddf1",
+            "name": "READ all groups",
+            "url": "{{local_url}}/api/groups/",
+            "method": "GET",
+            "sortNum": 37500,
+            "created": "2024-07-03T17:14:39.268Z",
+            "modified": "2024-07-03T17:15:37.974Z",
+            "headers": []
+        },
+        {
+            "_id": "88352932-686b-4923-8def-aebc17ec0cc4",
+            "colId": "c596ad08-5547-49fa-ada5-78507c2c4ba5",
+            "containerId": "ca60d7b2-3762-468d-ad9f-ed083ef83531",
+            "name": "LOGIN (to get the token)",
+            "url": "{{local_url}}/auth/login",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-07-03T08:12:38.780Z",
+            "modified": "2024-07-03T08:14:37.238Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"john.doe@mail.com\",\n  \"password\": \"password\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "012732b6-6874-4ec7-b464-31decab5fcf8",
+            "colId": "c596ad08-5547-49fa-ada5-78507c2c4ba5",
+            "containerId": "698a59e8-6377-420c-ab71-6f037bcfddf1",
+            "name": "CREATE one group",
+            "url": "{{local_url}}/api/groups/",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-07-03T14:35:04.620Z",
+            "modified": "2024-07-03T15:17:40.801Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Food lovers\",\n  \"description\": \"This group is dedicated to eating better in general\",\n  \"admin\": \"668507ba4affb9d6184853a4\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ODUwN2JhNGFmZmI5ZDYxODQ4NTNhNCIsImlhdCI6MTcxOTk5NDQ4OSwiZXhwIjoxNzIwMDgwODg5fQ.WHI2aU86Ff97u1EekBJxoorSqlP3HliySLZUTebMKww"
+            }
+        }
+    ],
+    "ref": "mOeGi4VX3f9YbiJRhNLr94uQJIrTCwcTTpM7jwbVomigqgRPkoaed3-UvyfO6arUZ2W7C7E3ah_2XOBlZvLGZA"
+}

@@ -1,4 +1,3 @@
-const Student = require("../model/Student.model");
 const bcrypt = require("bcryptjs");
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
@@ -8,9 +7,9 @@ const SALT = 12;
 
 router.post("/signup", async (req, res, next) => {
   try {
-    const { email, password, name } = req.body;
+    const { email, password, username } = req.body;
 
-    if (email === "" || password === "" || name === "") {
+    if (email === "" || password === "" || username === "") {
       res.status(400).json({ message: "invalid entry" });
       return;
     }
@@ -34,18 +33,19 @@ router.post("/signup", async (req, res, next) => {
 
     if (foundUser) {
       res.status(400).json({ message: "user already exists" });
+      return;
     }
 
-    const salt = 12;
+    hashedPassword = bcrypt.hashSync(password, SALT);
 
-    hashedPassword = bcrypt.hashSync(password, salt);
     const createdUser = await User.create({
-      name,
+      username,
       email,
       password: hashedPassword,
     });
-    const { newEmail, newName, _id } = createdUser;
-    const user = { newName, newEmail, _id };
+    const { newEmail, newUsername, _id } = createdUser;
+    const user = { newUsername, newEmail, _id };
+
     res.status(201).json({ user: user });
   } catch (error) {
     next(error);

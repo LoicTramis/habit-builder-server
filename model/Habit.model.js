@@ -1,34 +1,35 @@
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const { Schema, model } = mongoose;
 
 const habitSchema = new Schema({
-    title: {
-        type: String,
-        require: true,
-    },
-    descritpion: {
-        type: String,
-        require: true,
-    },
-    startGoal: {
-        type: Date,
-        default: Date.now,
-    },
-    endGoal: {
-        type: Date,
-    },
-    frequency: {
-        type: String,
-    },
-    difficulty: {
-        type: String,
-        enum: ["Easy", "Medium", "Hard", "Challenger", "Goggins"],
-    },
-    status: {
-        type: String,
-        enum: ["Incoming", "Ongoing", "Done"],
-    },
+  title: {
+    type: String,
+    require: true,
+  },
+  descritpion: {
+    type: String,
+    require: true,
+  },
+  startGoal: {
+    type: Date,
+    default: Date.now,
+  },
+  endGoal: {
+    type: Date,
+  },
+  frequency: {
+    type: String,
+  },
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+  difficulty: {
+    type: String,
+    enum: ["Easy", "Medium", "Hard", "Challenger", "Goggins"],
+  },
+  groups: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
-const Habit = mongoose.model("Habit", habitSchema);
+const Habit = model("Habit", habitSchema);
 module.exports = Habit;

@@ -11,15 +11,12 @@ _A progress everyday will go a very long way_
 - end goal
 - frequency
 - difficulty
-- status
 
 ### User
 - username
 - picture
 - email
 - password
-- habitIds
-- groupIds
 
 ### Group
 - name
@@ -45,6 +42,24 @@ _A progress everyday will go a very long way_
 
 ## Routes
 
-### GET all habit for a user
-### GET a habit
-### GET a user
+### Habits routes
+- GET all habits
+- GET one habit
+- GET all habits for one user
+- GET one habit for one user ?
+- POST one habit
+- UPDATE one habit
+- DELETE one habit
+
+### Groups routes
+- GET all groups
+- GET a group
+- POST a group
+- UPDATE a group
+- DELETE a group
+
+### Profiles routes
+- GET all users of a group (admin only)
+- GET a user
+- UPADTE a user
+- DELETE a user (delete account)

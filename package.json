@@ -1,7 +1,7 @@
 {
-  "name": "cohort-tools-api",
+  "name": "habit-builder-server",
   "version": "1.0.0",
-  "description": "ExpressJS API for the Cohort Tools app",
+  "description": "Good habit tracker",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ironhack-labs/cohort-tools-project.git"
+    "url": "git+https://github.com/LoicTramis/habit-builder-server.git"
   },
-  "author": "",
+  "author": "Loïc Tramis",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ironhack-labs/cohort-tools-project/issues"
+    "url": "https://github.com/LoicTramis/habit-builder-server/issues"
   },
-  "homepage": "https://github.com/ironhack-labs/cohort-tools-project#readme",
+  "homepage": "https://github.com/LoicTramis/habit-builder-server#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",

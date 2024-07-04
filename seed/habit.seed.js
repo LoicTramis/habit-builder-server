@@ -1,11 +1,12 @@
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 require("./../config/dbConnect");
+const bcrypt = require("bcryptjs");
 
 const Habit = require("./../model/Habit.model");
 const Group = require("./../model/Group.model");
 const User = require("./../model/User.model");
-const password = "password";
+const password = bcrypt.hashSync("password", 12);
 
 const habits = [
   {
@@ -134,6 +135,7 @@ async function seed() {
       // Generate HABITS
       group.habits = [];
       const randomHabitLength = Math.ceil(Math.random() * 3);
+
       for (let index = 0; index < randomHabitLength; index++) {
         const randomHabit = createdHabits[Math.floor(Math.random() * createdHabits.length)];
         group.habits.push(randomHabit._id);

@@ -53,23 +53,20 @@ router.post("/signup", async (req, res, next) => {
 });
 
 router.post("/login", async (req, res, next) => {
-  console.log("Im here");
   try {
     const { email, password } = req.body;
-    console.log(password);
     if (!email || !password) {
-      return res.status(400).json({ message: "this doesn't exist" });
+      return res.status(400).json({ message: "You need an email and a password" });
     }
 
     const foundUser = await User.findOne({ email }, { email: 1, password: 1 });
     if (!foundUser) {
-      return res.status(400).json({ message: "wrong credentials" });
+      return res.status(400).json({ message: "User not found" });
     }
 
-    console.log("right before bcrypt");
     const correctPassword = await bcrypt.compare(password, foundUser.password);
     if (!correctPassword) {
-      return res.status(401).json({ message: "wrong credentials" });
+      return res.status(401).json({ message: "Wrong credentials" });
     }
 
     const payload = { id: foundUser._id };

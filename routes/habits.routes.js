@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { isAuth } = require("../middleware/jwt.middleware");
 const Habit = require("../model/Habit.model");
 
-// GET all habits
+// Get all habits
 router.get("/", async (req, res, next) => {
   try {
     const habits = await Habit.find({});
@@ -12,7 +12,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// GET one habit
+// Get one habit
 router.get("/:habitId", async (req, res, next) => {
   try {
     const { habitId } = req.params;
@@ -23,22 +23,12 @@ router.get("/:habitId", async (req, res, next) => {
   }
 });
 
-// GET all habits for one user
-router.get("/:userId", isAuth, async (req, res, next) => {
-  try {
-    const { habitId } = req.params;
-    const habit = await Habit.find({ _id: habitId });
-    res.status(200).json(habit);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// POST one habit
+// Create one habit
 router.post("/", isAuth, async (req, res, next) => {
   try {
+    const creator = req.payload.id;
     const { title, description, frequency, difficulty, status } = req.body;
-    const newHabit = { title, description, frequency, difficulty, status };
+    const newHabit = { title, description, frequency, creator, difficulty, status };
 
     // Save in DB
     const createdHabit = await Habit.create(newHabit);
@@ -49,25 +39,34 @@ router.post("/", isAuth, async (req, res, next) => {
   }
 });
 
-// UPDATE one habit (admin only)
+// Update one habit (admin only)
 router.put("/:habitId", isAuth, async (req, res, next) => {
   try {
+    const userId = req.payload.id;
     const { habitId } = req.params;
+    console.log(habitId);
     const { title, description, frequency, difficulty, status } = req.body;
+
     const habitToUpdate = { title, description, frequency, difficulty, status };
-    const updatedHabit = await Habit.findByIdAndUpdate({ _id: habitId }, habitToUpdate, { new: true });
+    console.log(habitToUpdate);
+
+    const updatedHabit = await Habit.findOneAndUpdate({ $and: [{ _id: habitId }, { creator: userId }] }, habitToUpdate, { new: true });
+    console.log(updatedHabit);
     res.status(200).json(updatedHabit);
   } catch (error) {
     next(error);
   }
 });
 
-// DELETE one habit (admin only)
+// Delete one habit (admin only)
 router.delete("/:habitId", isAuth, async (req, res, next) => {
   try {
+    const userId = req.payload.id;
     const { habitId } = req.params;
-    await Habit.findByIdAndDelete(habitId);
-    res.status(204).json(updatedHabit);
+
+    const deletedHabit = await Habit.findOneAndDelete({ _id: habitId, creator: userId });
+
+    res.status(202).json(deletedHabit);
   } catch (error) {
     next(error);
   }

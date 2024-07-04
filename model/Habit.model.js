@@ -23,6 +23,7 @@ const habitSchema = new Schema({
   creator: {
     type: Schema.Types.ObjectId,
     ref: "User",
+    require: true,
   },
   difficulty: {
     type: String,

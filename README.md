@@ -35,6 +35,8 @@ _A progress everyday will go a very long way_
 
 ### Update
 - a habit (by a user)
+- add a member to a group
+- delete a member from a group
 
 ### Delete
 - a group (by a user)

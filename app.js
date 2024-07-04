@@ -25,6 +25,7 @@ app.use(cookieParser());
 // ROUTES - https://expressjs.com/en/starter/basic-routing.html
 app.use("/auth", require("./routes/auth.routes.js"));
 app.use("/api", require("./routes/index.routes.js"));
+
 app.use(notFoundHandler);
 app.use(errorHandler);
 

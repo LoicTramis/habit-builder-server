@@ -44,7 +44,6 @@ router.post("/", isAuth, async (req, res, next) => {
   }
 });
 
-// TODO
 // Change the group info
 router.put("/:groupId", isAuth, async (req, res, next) => {
   try {

@@ -46,7 +46,20 @@ router.post("/", isAuth, async (req, res, next) => {
 
 // TODO
 // Change the group info
-router.put("/:groupId", isAuth, async (req, res, next) => {});
+router.put("/:groupId", isAuth, async (req, res, next) => {
+  try {
+    const userId = req.payload.id;
+    const { groupId } = req.params;
+    const { name, description } = req.body;
+    const changedGroup = { name, description };
+
+    const updatedGroup = await Group.findOneAndUpdate({ _id: groupId, admin: userId }, changedGroup, { new: true });
+
+    res.status(202).json(updatedGroup);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // Add a user to a group
 router.patch("/:groupId/add/:userId", isAuth, async (req, res, next) => {

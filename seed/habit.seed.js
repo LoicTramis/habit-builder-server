@@ -68,6 +68,20 @@ const groups = [
     // habits: ["Read Books"],
     // members: ["User789"],
   },
+  {
+    name: "Goggins maniac",
+    description: "STAY HARD MOTHERFUCKER.",
+    admin: "Tina",
+    // habits: ["Read Books"],
+    // members: ["User789"],
+  },
+  {
+    name: "Chad in progress",
+    description: "Red pilled, becoming giga chad is the only way (not incel at all).",
+    admin: "Chadwick",
+    // habits: ["Read Books"],
+    // members: ["User789"],
+  },
 ];
 const users = [
   {
@@ -96,8 +110,28 @@ const users = [
     password,
   },
   {
-    username: "Gene",
-    email: "gene.belcher@bob.com",
+    username: "Goggins",
+    email: "david.goggins@stayhard.com",
+    password,
+  },
+  {
+    username: "Entropy",
+    email: "entropy.cosmic@mail.com",
+    password,
+  },
+  {
+    username: "Eternity",
+    email: "eternity.cosmic@mail.com",
+    password,
+  },
+  {
+    username: "Infinity",
+    email: "infinity.cosmic@mail.com",
+    password,
+  },
+  {
+    username: "Death",
+    email: "death.cosmic@mail.com",
     password,
   },
 ];
@@ -122,7 +156,6 @@ async function seed() {
     for (const habit of habits) {
       const randomUser = createdUsers[Math.floor(Math.random() * createdUsers.length)];
       habit.creator = randomUser._id;
-      habit.groups = createdUsers.filter((user) => user._id !== randomUser._id);
     }
     const createdHabits = await Habit.create(habits);
     console.log(`✔  Created ${createdHabits.length} habits.`);
@@ -142,7 +175,8 @@ async function seed() {
       }
       // Generate MEMBERS
       group.members = [];
-      const randomMembersLength = Math.ceil(Math.random() * 5);
+      const randomMembersLength = Math.ceil(Math.random() * 10);
+
       for (let index = 0; index < randomMembersLength; index++) {
         const randomUser = createdUsers[Math.floor(Math.random() * createdUsers.length)];
         group.members.push(randomUser._id);
@@ -150,6 +184,22 @@ async function seed() {
     }
     const createdGroups = await Group.create(groups);
     console.log(`✔  Created ${createdGroups.length} groups.`);
+
+    const deleted2Habits = await Habit.deleteMany();
+    console.log(`❌ Deleted ${deleted2Habits.deletedCount} habits.`);
+
+    // UPDATE HABIT
+    for (const habit of habits) {
+      const randomGroupLength = Math.ceil(Math.random() * 6);
+      habit.groups = [];
+      // Generate GROUPS
+      for (let index = 0; index < randomGroupLength; index++) {
+        const randomGroup = createdGroups[Math.floor(Math.random() * createdGroups.length)];
+        habit.groups.push(randomGroup._id);
+      }
+    }
+    const updatedHabit = await Habit.create(habits);
+    console.log(`✔  Created ${updatedHabit.length} habits.`);
   } catch (error) {
     console.log(error);
   } finally {

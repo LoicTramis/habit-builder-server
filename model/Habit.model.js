@@ -4,11 +4,11 @@ const { Schema, model } = mongoose;
 const habitSchema = new Schema({
   title: {
     type: String,
-    require: true,
+    required: true,
   },
   descritpion: {
     type: String,
-    require: true,
+    required: true,
   },
   startGoal: {
     type: Date,
@@ -23,7 +23,7 @@ const habitSchema = new Schema({
   creator: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    require: true,
+    required: true,
   },
   difficulty: {
     type: String,

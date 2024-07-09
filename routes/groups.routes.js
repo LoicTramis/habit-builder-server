@@ -5,7 +5,7 @@ const Group = require("../model/Group.model");
 // Get all groups
 router.get("/", async (req, res, next) => {
   try {
-    const groups = await Group.find({});
+    const groups = await Group.find({}).populate("admin").populate("habits").populate("members");
 
     res.status(200).json(groups);
   } catch (error) {

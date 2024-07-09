@@ -29,7 +29,7 @@ const habitSchema = new Schema({
     type: String,
     enum: ["Easy", "Medium", "Hard", "Challenger", "Goggins"],
   },
-  groups: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  members: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
 const Habit = model("Habit", habitSchema);

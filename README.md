@@ -2,6 +2,15 @@
 Build good habit by setting up goal, forming group around that goal and putting the work to make that change
 _A progress everyday will go a very long way_
 
+## Relation
+
+A group can have multiple habits
+A group can have multiple user
+
+A habit can have multiple users
+
+A user have no habit and no group
+
 ## Models
 
 ### Habit

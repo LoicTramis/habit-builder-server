@@ -10,11 +10,11 @@ const habitSchema = new Schema({
     type: String,
     required: true,
   },
-  startGoal: {
+  startDate: {
     type: Date,
     default: Date.now,
   },
-  endGoal: {
+  endDate: {
     type: Date,
   },
   frequency: {

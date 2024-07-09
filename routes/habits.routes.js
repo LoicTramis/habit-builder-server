@@ -7,7 +7,6 @@ router.get("/", async (req, res, next) => {
   try {
     const habits = await Habit.find({}).populate("creator");
 
-    console.log(habits);
     res.status(200).json(habits);
   } catch (error) {
     next(error);

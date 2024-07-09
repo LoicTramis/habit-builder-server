@@ -156,6 +156,10 @@ async function seed() {
     for (const habit of habits) {
       const randomUser = createdUsers[Math.floor(Math.random() * createdUsers.length)];
       habit.creator = randomUser._id;
+      habit.startDate =
+        Date.now() + 1000 * 60 * 60 * 24 * Math.floor(Math.random() * 5) * Math.floor(Math.random() < 0.5 ? 1 : -1);
+      habit.endDate = Date.now() + 1000 * 60 * 60 * 24 * Math.floor(Math.random() * 90);
+      habit.groups = createdUsers.filter((user) => user._id !== randomUser._id);
     }
     const createdHabits = await Habit.create(habits);
     console.log(`✔  Created ${createdHabits.length} habits.`);

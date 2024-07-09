@@ -3,11 +3,9 @@ const { isAuth } = require("../middleware/jwt.middleware");
 const Group = require("../model/Group.model");
 
 // Get all groups
-router.get("/", isAuth, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
-    const userId = req.payload.id;
-
-    const groups = await Group.find({ members: { $in: [userId] } });
+    const groups = await Group.find({});
 
     res.status(200).json(groups);
   } catch (error) {

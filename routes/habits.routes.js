@@ -1,6 +1,21 @@
 const router = require("express").Router();
-const { getToken } = require("../middleware/jwt.middleware");
+const { getToken, isAuth } = require("../middleware/jwt.middleware");
 const Habit = require("../model/Habit.model");
+
+// Get all habits of one user
+router.get("/in", getToken, async (req, res, next) => {
+  try {
+    const userId = req.payload.id;
+    console.log(userId);
+    const habits = await Habit.find({ creator: userId })
+      .populate({ path: "creator", select: "-password" })
+      .populate({ path: "members", select: "-password" });
+
+    res.status(200).json(habits);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // Get all habits
 router.get("/", async (req, res, next) => {

@@ -16,6 +16,21 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// Get all groups of one user
+router.get("/in", getToken, async (req, res, next) => {
+  try {
+    const userId = req.payload.id;
+    const groups = await Group.find({ members: { $in: [userId] } })
+      .populate({ path: "admin", select: "-password" })
+      .populate("habits")
+      .populate({ path: "members", select: "-password" });
+
+    res.status(200).json(groups);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Get one group
 router.get("/:groupId", getToken, async (req, res, next) => {
   try {

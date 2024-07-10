@@ -1,11 +1,13 @@
 const router = require("express").Router();
-const { isAuth } = require("../middleware/jwt.middleware");
+const { getToken } = require("../middleware/jwt.middleware");
 const Habit = require("../model/Habit.model");
 
 // Get all habits
 router.get("/", async (req, res, next) => {
   try {
-    const habits = await Habit.find({}).populate("creator");
+    const habits = await Habit.find({})
+      .populate({ path: "creator", select: "-password" })
+      .populate({ path: "members", select: "-password" });
 
     res.status(200).json(habits);
   } catch (error) {
@@ -25,7 +27,7 @@ router.get("/:habitId", async (req, res, next) => {
 });
 
 // Create one habit
-router.post("/", isAuth, async (req, res, next) => {
+router.post("/", getToken, async (req, res, next) => {
   try {
     const creator = req.payload.id;
     const { title, description, frequency, difficulty, status } = req.body;
@@ -41,7 +43,7 @@ router.post("/", isAuth, async (req, res, next) => {
 });
 
 // Update one habit (admin only)
-router.put("/:habitId", isAuth, async (req, res, next) => {
+router.put("/:habitId", getToken, async (req, res, next) => {
   try {
     const userId = req.payload.id;
     const { habitId } = req.params;
@@ -51,7 +53,11 @@ router.put("/:habitId", isAuth, async (req, res, next) => {
     const habitToUpdate = { title, description, frequency, difficulty, status };
     console.log(habitToUpdate);
 
-    const updatedHabit = await Habit.findOneAndUpdate({ $and: [{ _id: habitId }, { creator: userId }] }, habitToUpdate, { new: true });
+    const updatedHabit = await Habit.findOneAndUpdate(
+      { $and: [{ _id: habitId }, { creator: userId }] },
+      habitToUpdate,
+      { new: true }
+    );
     console.log(updatedHabit);
     res.status(200).json(updatedHabit);
   } catch (error) {
@@ -60,7 +66,7 @@ router.put("/:habitId", isAuth, async (req, res, next) => {
 });
 
 // Delete one habit (admin only)
-router.delete("/:habitId", isAuth, async (req, res, next) => {
+router.delete("/:habitId", getToken, async (req, res, next) => {
   try {
     const userId = req.payload.id;
     const { habitId } = req.params;

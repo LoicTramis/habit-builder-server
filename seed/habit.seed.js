@@ -161,7 +161,9 @@ async function seed() {
 
       for (let index = 0; index < randomMembersLength; index++) {
         const randomUser = createdUsers[Math.floor(Math.random() * createdUsers.length)];
-        habit.members.push(randomUser._id);
+        if (!habit.members.includes(randomUser._id)) {
+          habit.members.push(randomUser._id);
+        }
       }
     }
     const createdHabits = await Habit.create(habits);

@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
-const { isAuth } = require("../middleware/jwt.middleware");
+const { getToken } = require("../middleware/jwt.middleware");
 const User = require("../model/User.model");
 
 const SALT = 12;
@@ -82,9 +82,10 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.get("/verify", isAuth, async (req, res, next) => {
+router.get("/verify", getToken, async (req, res, next) => {
   try {
     const user = await User.findById(req.payload.id);
+
     res.json(user);
   } catch (error) {
     next(error);

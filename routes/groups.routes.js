@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { isAuth } = require("../middleware/jwt.middleware");
+const { getToken } = require("../middleware/jwt.middleware");
 const Group = require("../model/Group.model");
 
 // Get all groups
@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // Get one group
-router.get("/:groupId", isAuth, async (req, res, next) => {
+router.get("/:groupId", getToken, async (req, res, next) => {
   try {
     const userId = req.payload.id;
     const { groupId } = req.params;
@@ -31,7 +31,7 @@ router.get("/:groupId", isAuth, async (req, res, next) => {
 });
 
 // Create a group
-router.post("/", isAuth, async (req, res, next) => {
+router.post("/", getToken, async (req, res, next) => {
   try {
     const admin = req.payload.id;
     const { name, description, habits, members } = req.body;
@@ -46,7 +46,7 @@ router.post("/", isAuth, async (req, res, next) => {
 });
 
 // Change the group info
-router.put("/:groupId", isAuth, async (req, res, next) => {
+router.put("/:groupId", getToken, async (req, res, next) => {
   try {
     const userId = req.payload.id;
     const { groupId } = req.params;
@@ -66,7 +66,7 @@ router.put("/:groupId", isAuth, async (req, res, next) => {
 });
 
 // Add a user to a group
-router.patch("/:groupId/add/:userId", isAuth, async (req, res, next) => {
+router.patch("/:groupId/add/:userId", getToken, async (req, res, next) => {
   try {
     const adminId = req.payload.id;
     const { groupId, userId } = req.params;
@@ -86,7 +86,7 @@ router.patch("/:groupId/add/:userId", isAuth, async (req, res, next) => {
 });
 
 // Delete a user from a group
-router.patch("/:groupId/remove/:userId", isAuth, async (req, res, next) => {
+router.patch("/:groupId/remove/:userId", getToken, async (req, res, next) => {
   try {
     const adminId = req.payload.id;
     const { groupId, userId } = req.params;
@@ -106,7 +106,7 @@ router.patch("/:groupId/remove/:userId", isAuth, async (req, res, next) => {
 });
 
 // Delete a group
-router.delete("/:groupId", isAuth, async (req, res, next) => {
+router.delete("/:groupId", getToken, async (req, res, next) => {
   try {
     const userId = req.payload.id;
     const { groupId } = req.params;

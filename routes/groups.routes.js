@@ -5,7 +5,10 @@ const Group = require("../model/Group.model");
 // Get all groups
 router.get("/", async (req, res, next) => {
   try {
-    const groups = await Group.find({}).populate("admin").populate("habits").populate("members");
+    const groups = await Group.find({})
+      .populate({ path: "admin", select: "-password" })
+      .populate("habits")
+      .populate({ path: "members", select: "-password" });
 
     res.status(200).json(groups);
   } catch (error) {
@@ -50,7 +53,11 @@ router.put("/:groupId", isAuth, async (req, res, next) => {
     const { name, description } = req.body;
     const changedGroup = { name, description };
 
-    const updatedGroup = await Group.findOneAndUpdate({ _id: groupId, admin: userId }, changedGroup, { new: true });
+    const updatedGroup = await Group.findOneAndUpdate(
+      { _id: groupId, admin: userId },
+      changedGroup,
+      { new: true }
+    );
 
     res.status(202).json(updatedGroup);
   } catch (error) {
@@ -104,7 +111,9 @@ router.delete("/:groupId", isAuth, async (req, res, next) => {
     const userId = req.payload.id;
     const { groupId } = req.params;
 
-    const deletedGroup = await Group.findOneAndDelete({ $and: [{ _id: groupId }, { admin: userId }] });
+    const deletedGroup = await Group.findOneAndDelete({
+      $and: [{ _id: groupId }, { admin: userId }],
+    });
 
     res.status(202).json(deletedGroup);
   } catch (error) {

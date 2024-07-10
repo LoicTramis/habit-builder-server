@@ -11,7 +11,8 @@ const password = bcrypt.hashSync("password", 12);
 const habits = [
   {
     title: "Daily Meditation",
-    description: "Practice mindfulness meditation for a few minutes every day to reduce stress and improve focus.",
+    description:
+      "Practice mindfulness meditation for a few minutes every day to reduce stress and improve focus.",
     frequency: "Daily",
     difficulty: "Medium",
   },
@@ -51,36 +52,26 @@ const groups = [
     name: "Wellness Warriors",
     description: "A group dedicated to improving overall wellness through various healthy habits.",
     admin: "Louise",
-    // habits: ["Daily Meditation", "Healthy Eating"],
-    // members: ["User123", "User101"],
   },
   {
     name: "Fitness Enthusiasts",
     description: "For individuals committed to maintaining high physical fitness levels.",
     admin: "Tina",
-    // habits: ["Morning Jog"],
-    // members: ["User456"],
   },
   {
     name: "Book Lovers",
     description: "A community for those who enjoy reading and discussing books.",
     admin: "Tina",
-    // habits: ["Read Books"],
-    // members: ["User789"],
   },
   {
     name: "Goggins maniac",
     description: "STAY HARD MOTHERFUCKER.",
     admin: "Tina",
-    // habits: ["Read Books"],
-    // members: ["User789"],
   },
   {
     name: "Chad in progress",
     description: "Red pilled, becoming giga chad is the only way (not incel at all).",
     admin: "Chadwick",
-    // habits: ["Read Books"],
-    // members: ["User789"],
   },
 ];
 const users = [
@@ -157,9 +148,21 @@ async function seed() {
       const randomUser = createdUsers[Math.floor(Math.random() * createdUsers.length)];
       habit.creator = randomUser._id;
       habit.startDate =
-        Date.now() + 1000 * 60 * 60 * 24 * Math.floor(Math.random() * 5) * Math.floor(Math.random() < 0.5 ? 1 : -1);
+        Date.now() +
+        1000 *
+          60 *
+          60 *
+          24 *
+          Math.floor(Math.random() * 5) *
+          Math.floor(Math.random() < 0.5 ? 1 : -1);
       habit.endDate = Date.now() + 1000 * 60 * 60 * 24 * Math.floor(Math.random() * 90);
-      habit.groups = createdUsers.filter((user) => user._id !== randomUser._id);
+      habit.members = [];
+      const randomMembersLength = Math.ceil(Math.random() * 10);
+
+      for (let index = 0; index < randomMembersLength; index++) {
+        const randomUser = createdUsers[Math.floor(Math.random() * createdUsers.length)];
+        habit.members.push(randomUser._id);
+      }
     }
     const createdHabits = await Habit.create(habits);
     console.log(`✔  Created ${createdHabits.length} habits.`);
@@ -171,7 +174,7 @@ async function seed() {
       group.admin = randomUser._id;
       // Generate HABITS
       group.habits = [];
-      const randomHabitLength = Math.ceil(Math.random() * 3);
+      const randomHabitLength = Math.ceil(Math.random() * createdUsers.length - 1);
 
       for (let index = 0; index < randomHabitLength; index++) {
         const randomHabit = createdHabits[Math.floor(Math.random() * createdHabits.length)];
@@ -188,22 +191,6 @@ async function seed() {
     }
     const createdGroups = await Group.create(groups);
     console.log(`✔  Created ${createdGroups.length} groups.`);
-
-    const deleted2Habits = await Habit.deleteMany();
-    console.log(`❌ Deleted ${deleted2Habits.deletedCount} habits.`);
-
-    // UPDATE HABIT
-    for (const habit of habits) {
-      const randomGroupLength = Math.ceil(Math.random() * 6);
-      habit.groups = [];
-      // Generate GROUPS
-      for (let index = 0; index < randomGroupLength; index++) {
-        const randomGroup = createdGroups[Math.floor(Math.random() * createdGroups.length)];
-        habit.groups.push(randomGroup._id);
-      }
-    }
-    const updatedHabit = await Habit.create(habits);
-    console.log(`✔  Created ${updatedHabit.length} habits.`);
   } catch (error) {
     console.log(error);
   } finally {

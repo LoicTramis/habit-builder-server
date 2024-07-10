@@ -4,12 +4,19 @@ _A progress everyday will go a very long way_
 
 ## Relation
 
+### Group 
 A group can have multiple habits
 A group can have multiple user
+Users from a groups can see all the habits in that group
+but need to "participate" in order to go in the habit
 
+### habit
 A habit can have multiple users
 
+### User
 A user have no habit and no group
+A user can join a group
+A user can participate in a habit
 
 ## Models
 

@@ -34,7 +34,10 @@ router.get("/", async (req, res, next) => {
 router.get("/:habitId", async (req, res, next) => {
   try {
     const { habitId } = req.params;
-    const habit = await Habit.find({ _id: habitId }).populate("creator");
+    const habit = await Habit.find({ _id: habitId }).populate({
+      path: "creator",
+      select: "-password",
+    });
     res.status(200).json(habit);
   } catch (error) {
     next(error);
@@ -50,7 +53,7 @@ router.post("/", getToken, async (req, res, next) => {
 
     // Save in DB
     const createdHabit = await Habit.create(newHabit);
-    await createdHabit.populate('creator')
+    await createdHabit.populate({ path: "creator", select: "-password" });
     // Response
     res.status(201).json(createdHabit);
   } catch (error) {
@@ -63,18 +66,16 @@ router.put("/:habitId", getToken, async (req, res, next) => {
   try {
     const userId = req.payload.id;
     const { habitId } = req.params;
-    console.log(habitId);
     const { title, description, frequency, difficulty, status } = req.body;
-
+    console.log(req.body);
     const habitToUpdate = { title, description, frequency, difficulty, status };
-    console.log(habitToUpdate);
 
     const updatedHabit = await Habit.findOneAndUpdate(
-      { $and: [{ _id: habitId }, { creator: userId }] },
+      { _id: habitId, creator: userId },
       habitToUpdate,
       { new: true }
     );
-    console.log(updatedHabit);
+    await updatedHabit.populate({ path: "creator", select: "-password" });
     res.status(200).json(updatedHabit);
   } catch (error) {
     next(error);

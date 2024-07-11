@@ -34,7 +34,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:habitId", async (req, res, next) => {
   try {
     const { habitId } = req.params;
-    const habit = await Habit.find({ _id: habitId });
+    const habit = await Habit.find({ _id: habitId }).populate("creator");
     res.status(200).json(habit);
   } catch (error) {
     next(error);

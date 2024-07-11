@@ -50,10 +50,11 @@ router.post("/", getToken, async (req, res, next) => {
 
     // Save in DB
     const createdHabit = await Habit.create(newHabit);
+    await createdHabit.populate('creator')
     // Response
     res.status(201).json(createdHabit);
   } catch (error) {
-    next(err);
+    next(error);
   }
 });
 

@@ -15,6 +15,7 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
+    // TODO: add this -> select: false
   },
 });
 

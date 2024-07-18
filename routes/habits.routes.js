@@ -68,7 +68,6 @@ router.put("/:habitId", getToken, async (req, res, next) => {
     const { habitId } = req.params;
     const { title, description, frequency, difficulty, status, endDate } = req.body;
     const habitToUpdate = { title, description, frequency, difficulty, status, endDate };
-    console.log(habitToUpdate);
 
     const updatedHabit = await Habit.findOneAndUpdate(
       { _id: habitId, creator: userId },
@@ -81,6 +80,42 @@ router.put("/:habitId", getToken, async (req, res, next) => {
     next(error);
   }
 });
+
+// Join a habit in members array
+router.patch("/add/:habitId", getToken, async (req, res, next) => {
+  try {
+    const userId = req.payload.id
+    const { habitId } = req.params
+
+    const updatedHabit = await Habit.findOneAndUpdate(
+      { _id: habitId },
+      { $push: { members: userId } },
+      { new: true }
+    )
+    await updatedHabit.populate({ path: "creator", select: "-password" });
+    res.status(200).json(updatedHabit)
+  } catch (error) {
+    next(error)
+  }
+})
+// Join a habit in members array
+router.patch("/remove/:habitId", getToken, async (req, res, next) => {
+  try {
+    const userId = req.payload.id
+    const { habitId } = req.params
+
+    const updatedHabit = await Habit.findOneAndUpdate(
+      { _id: habitId },
+      { $pull: { members: userId } },
+      { new: true }
+    )
+    await updatedHabit.populate({ path: "creator", select: "-password" });
+    res.status(200).json(updatedHabit)
+  } catch (error) {
+    next(error)
+  }
+})
+
 
 // Delete one habit (admin only)
 router.delete("/:habitId", getToken, async (req, res, next) => {

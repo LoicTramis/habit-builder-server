@@ -61,8 +61,17 @@ router.get("/:habitId", async (req, res, next) => {
 router.post("/", getToken, async (req, res, next) => {
   try {
     const creator = req.payload.id;
-    const { title, description, frequency, difficulty, status, endDate } = req.body;
-    const newHabit = { title, description, frequency, creator, difficulty, status, endDate };
+    const { title, description, frequency, difficulty, status, startDate, endDate } = req.body;
+    const newHabit = {
+      title,
+      description,
+      frequency,
+      creator,
+      difficulty,
+      status,
+      startDate,
+      endDate,
+    };
 
     // Save in DB
     const createdHabit = await Habit.create(newHabit);
@@ -79,8 +88,8 @@ router.put("/:habitId", getToken, async (req, res, next) => {
   try {
     const userId = req.payload.id;
     const { habitId } = req.params;
-    const { title, description, frequency, difficulty, status, endDate } = req.body;
-    const habitToUpdate = { title, description, frequency, difficulty, status, endDate };
+    const { title, description, frequency, difficulty, status, startDate, endDate } = req.body;
+    const habitToUpdate = { title, description, frequency, difficulty, status, startDate, endDate };
 
     const updatedHabit = await Habit.findOneAndUpdate(
       { _id: habitId, creator: userId },

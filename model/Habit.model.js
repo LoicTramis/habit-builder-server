@@ -16,6 +16,9 @@ const habitSchema = new Schema({
   },
   endDate: {
     type: Date,
+    default: function () {
+      return this.startDate + 7 * 1000 * 60 * 60 * 24;
+    },
   },
   frequency: {
     type: String,

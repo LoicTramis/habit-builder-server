@@ -61,17 +61,22 @@ router.get("/:habitId", async (req, res, next) => {
 router.post("/", getToken, async (req, res, next) => {
   try {
     const creator = req.payload.id;
-    const { title, description, frequency, difficulty, status, startDate, endDate } = req.body;
-    const newHabit = {
+    const { title, description, frequency, difficulty, startDate, endDate } = req.body;
+    let newHabit = {
       title,
       description,
       frequency,
       creator,
       difficulty,
-      status,
-      startDate,
-      endDate,
     };
+    console.log(startDate, endDate);
+    if (startDate === "") {
+      newHabit.startDate = undefined;
+    }
+    if (endDate === "") {
+      newHabit.endDate = undefined;
+    }
+    console.log(newHabit);
 
     // Save in DB
     const createdHabit = await Habit.create(newHabit);

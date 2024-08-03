@@ -69,14 +69,13 @@ router.post("/", getToken, async (req, res, next) => {
       creator,
       difficulty,
     };
-    console.log(startDate, endDate);
+
     if (startDate === "") {
       newHabit.startDate = undefined;
     }
     if (endDate === "") {
       newHabit.endDate = undefined;
     }
-    console.log(newHabit);
 
     // Save in DB
     const createdHabit = await Habit.create(newHabit);
@@ -88,13 +87,20 @@ router.post("/", getToken, async (req, res, next) => {
   }
 });
 
-// Update one habit (admin only)
+// Update one habit (creator only)
 router.put("/:habitId", getToken, async (req, res, next) => {
   try {
     const userId = req.payload.id;
     const { habitId } = req.params;
-    const { title, description, frequency, difficulty, status, startDate, endDate } = req.body;
-    const habitToUpdate = { title, description, frequency, difficulty, status, startDate, endDate };
+    const { title, description, frequency, difficulty, startDate, endDate } = req.body;
+    let habitToUpdate = { title, description, frequency, difficulty, startDate, endDate };
+
+    if (!startDate) {
+      habitToUpdate.startDate = undefined;
+    }
+    if (!endDate) {
+      habitToUpdate.endDate = undefined;
+    }
 
     const updatedHabit = await Habit.findOneAndUpdate(
       { _id: habitId, creator: userId },

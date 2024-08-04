@@ -79,7 +79,10 @@ router.post("/", getToken, async (req, res, next) => {
 
     // Save in DB
     const createdHabit = await Habit.create(newHabit);
-    await createdHabit.populate({ path: "creator", select: "-password" });
+    await createdHabit.populate({
+      path: "creator",
+      select: "-password",
+    });
     // Response
     res.status(201).json(createdHabit);
   } catch (error) {
@@ -93,7 +96,14 @@ router.put("/:habitId", getToken, async (req, res, next) => {
     const userId = req.payload.id;
     const { habitId } = req.params;
     const { title, description, frequency, difficulty, startDate, endDate } = req.body;
-    let habitToUpdate = { title, description, frequency, difficulty, startDate, endDate };
+    let habitToUpdate = {
+      title,
+      description,
+      frequency,
+      difficulty,
+      startDate,
+      endDate,
+    };
 
     if (!startDate) {
       habitToUpdate.startDate = undefined;
@@ -107,7 +117,10 @@ router.put("/:habitId", getToken, async (req, res, next) => {
       habitToUpdate,
       { new: true }
     );
-    await updatedHabit.populate({ path: "creator", select: "-password" });
+    await updatedHabit.populate({
+      path: "creator",
+      select: "-password",
+    });
     res.status(200).json(updatedHabit);
   } catch (error) {
     next(error);
@@ -125,7 +138,10 @@ router.patch("/add/:habitId", getToken, async (req, res, next) => {
       { $push: { members: userId } },
       { new: true }
     );
-    await updatedHabit.populate({ path: "creator", select: "-password" });
+    await updatedHabit.populate({
+      path: "creator",
+      select: "-password",
+    });
     res.status(200).json(updatedHabit);
   } catch (error) {
     next(error);
@@ -142,7 +158,10 @@ router.patch("/remove/:habitId", getToken, async (req, res, next) => {
       { $pull: { members: userId } },
       { new: true }
     );
-    await updatedHabit.populate({ path: "creator", select: "-password" });
+    await updatedHabit.populate({
+      path: "creator",
+      select: "-password",
+    });
     res.status(200).json(updatedHabit);
   } catch (error) {
     next(error);
@@ -155,7 +174,10 @@ router.delete("/:habitId", getToken, async (req, res, next) => {
     const userId = req.payload.id;
     const { habitId } = req.params;
 
-    const deletedHabit = await Habit.findOneAndDelete({ _id: habitId, creator: userId });
+    const deletedHabit = await Habit.findOneAndDelete({
+      _id: habitId,
+      creator: userId,
+    });
 
     res.status(202).json(deletedHabit);
   } catch (error) {

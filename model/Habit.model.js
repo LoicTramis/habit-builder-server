@@ -22,6 +22,7 @@ const habitSchema = new Schema({
   },
   frequency: {
     type: String,
+    enum: ["Daily", "Weekly", "Biweekly", "Monthly", "Quaterly"],
   },
   creator: {
     type: Schema.Types.ObjectId,
